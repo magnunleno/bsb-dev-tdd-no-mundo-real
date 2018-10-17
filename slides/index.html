@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>TDD: Django + PyTest - Meetup Brasília Dev Festival</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="Magnun Leno <magnun [dot] leno [at] gmail [dot] com>">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <style>
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <img src="img/tdd-diagram.png" style="border: unset; background: unset; box-shadow: unset; height: 300px;" />
+          <h2>Django + REST + Pytest</h2>
+          <h3 style="text-transform: unset; font-size: .8em;">(FactoryBoy + Faker + Coverage + ...)</h3>
+        </section>
+
+        <section>
+          <h2>Quem Sou Eu?</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Ninguém muito importante</li>
+            <li class="fragment fade-in-then-semi-out">Engenheiro de Tele... blá blá blá</li>
+            <li class="fragment fade-in-then-semi-out">Redes, Infraestrutura, Operações (DevOps)</li>
+            <li class="fragment fade-in-then-semi-out">Full Stack Developer</li>
+            <li class="fragment fade-in-then-semi-out">Contribuo pra alguns projetos FOSS</li>
+            <li class="fragment fade-in-then-semi-out">Escritor (UnderLinux, <a href="http://mindbending.org/pt">MindBending</a> entre outros...)</li>
+            <li class="fragment fade-in-then-semi-out">Podcaster <a href="http://hackncast.org/">Hack 'n' Cast</a></li>
+            <li class="fragment fade-in-then-semi-out">Amante de GNU/Linux, VIM, café, Rock 'n' Roll, cerveja e corridas de rua...</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Motivação</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in">Fail first, fail fast!</li>
+            <li class="fragment fade-in">Planejar antes de desenvolver;</li>
+            <li class="fragment fade-in">Você não é pago pra escrever código;</li>
+            <li class="fragment fade-in">Evitar constantes refatorações desnecessárias;</li>
+            <li class="fragment fade-in">Reduzir as suposições superestimadas e otimizações prematuras;</li>
+            <li class="fragment fade-in">Reduz acoplamento e cria uma boa arquitetura para reuso (qualidade);</li>
+            <li class="fragment fade-in">Paz interior :)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>TDD - Test Driven Development</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Não vou me aprofundar nos conceitos;</li>
+            <li class="fragment fade-in-then-semi-out">Processo de desenvolvimento de software;</li>
+            <li class="fragment fade-in">Lifecycle simplificado
+              <ol>
+                <li class="fragment fade-in">Transforme as especificações em casos de tests;</li>
+                <li class="fragment fade-in">Implemente somente a funcionalidade para validar o caso de testes;</li>
+                <li class="fragment fade-in">Refatore (se necessário)</li>
+                <li class="fragment fade-in">GOTO 1</li>
+              </ol>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <img src="./img/test-all-the-things.jpeg" />
+        </section>
+
+        <section>
+          <h2>Etapas</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in">Planeje
+              <ul>
+                <li>Novas funcionalidades...</li>
+                <li>Modificações de funcionalidades existentes...</li>
+                <li>API (não é a API REST)...</li>
+              </ul>
+            </li>
+            <li class="fragment fade-in">Escreva os Testes
+              <ul>
+                <li>Unitários e Funcionais</li>
+              </ul>
+            </li>
+            <li class="fragment fade-in">Escreva o Código
+              <ul>
+                <li>Até que todos os testes passem!</li>
+              </ul>
+            </li>
+            <li class="fragment fade-in">REFATORE!</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Testando... 123...</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in">Não faça testes manuais;</li>
+            <li class="fragment fade-in">Utilize dados fictícios;</li>
+            <li class="fragment fade-in">...ou extraídos de produção (descaracterizados);</li>
+            <li class="fragment fade-in">Faça mocking;</li>
+            <li class="fragment fade-in">Valide toda sua lógica (cobertura);</li>
+            <li class="fragment fade-in">Se está difícil de testar, você não está fazendo certo!</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/search/search.js', async: true },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
