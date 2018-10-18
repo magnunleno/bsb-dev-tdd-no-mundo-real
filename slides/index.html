@@ -65,7 +65,6 @@
             <li class="fragment fade-in">Fail first, fail fast!</li>
             <li class="fragment fade-in">Planejar antes de desenvolver;</li>
             <li class="fragment fade-in">Você não é pago pra escrever código;</li>
-            <li class="fragment fade-in">Evitar constantes refatorações desnecessárias;</li>
             <li class="fragment fade-in">Reduzir as suposições superestimadas e otimizações prematuras;</li>
             <li class="fragment fade-in">Reduz acoplamento e cria uma boa arquitetura para reuso (qualidade);</li>
             <li class="fragment fade-in">Paz interior :)</li>
@@ -76,8 +75,8 @@
           <h2>TDD - Test Driven Development</h2>
           <ul style="text-align: left; width: 100%">
             <li class="fragment fade-in-then-semi-out">Não vou me aprofundar nos conceitos;</li>
-            <li class="fragment fade-in-then-semi-out">Kent Beck popularizou o conceito no XP em 1999;</li>
             <li class="fragment fade-in-then-semi-out">Processo de desenvolvimento de software;</li>
+            <li class="fragment fade-in-then-semi-out">Kent Beck popularizou o conceito no XP em 1999;</li>
             <li class="fragment fade-in">Lifecycle simplificado
               <ol>
                 <li class="fragment fade-in">Transforme as especificações em casos de tests;</li>
@@ -87,10 +86,6 @@
               </ol>
             </li>
           </ul>
-        </section>
-
-        <section>
-          <img src="./img/test-all-the-things.jpeg" />
         </section>
 
         <section>
@@ -118,15 +113,142 @@
         </section>
 
         <section>
-          <h2>Testando... 123...</h2>
+          <img src="./img/test-all-the-things.jpeg" />
+        </section>
+
+        <section>
+          <h2>Testando, 1... 2... 3...</h2>
           <ul style="text-align: left; width: 100%">
             <li class="fragment fade-in">Não faça testes manuais;</li>
             <li class="fragment fade-in">Utilize dados fictícios;</li>
             <li class="fragment fade-in">...ou extraídos de produção (descaracterizados);</li>
-            <li class="fragment fade-in">Faça mocking;</li>
             <li class="fragment fade-in">Valide toda sua lógica (cobertura);</li>
             <li class="fragment fade-in">Se está difícil de testar, você não está fazendo certo!</li>
+            <li class="fragment fade-in">Utilize mocking, stubs e spies;</li>
           </ul>
+        </section>
+
+        <section>
+          <img src="./img/wait-what.jpg" />
+        </section>
+
+        <section>
+          <h2>Spies, Stubs e Mocks</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in">De acordo com <a href="https://martinfowler.com/articles/mocksArentStubs.html">Martin Fowler</a>...</li>
+            <li class="fragment fade-in">São sub-tipos de <em>test doubles</em>, junto com Dummy e Fake Objects;</li>
+            <li class="fragment fade-in">Nomenclatura varia de acordo com a linguagem e o framework de testes;</li>
+            <li class="fragment fade-in">Spies
+              <ul>
+              </ul>
+            </li>
+            <li class="fragment fade-in">Stub
+              <ul>
+                <li>"Substituição" de um método ou função simples a fim de evitar uma "comuniação externa";</li>
+                <li>Geralmente envolve a devolução de "respostas enlatadas";</li>
+              </ul>
+            </li>
+            <li class="fragment fade-in">Mocks
+              <ul>
+                <li>Forma mais complexa de </li>
+                <li>Stub de um "objeto complexo";</li>
+                <li>Possui funcionalidades de spies e de stubs</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Spies</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in">Um "envelope" de uma função ou método sem alterar seu comportamento;</li>
+            <li class="fragment fade-in">Registra seus argumentos, quantidade de vezes que foi invocada, retorno...</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Spies</h2>
+<pre class="fragment fade-in" style="width: 49%; float: left"><code class="hlpy" data-trim contenteditable>
+# cliente.py
+import json
+from datetime import date, datetime
+
+
+def fmt_datetime(dt):
+    if isinstance(dt, date):
+        dt = datetime(
+          dt.year, dt.month, dt.day
+        )
+    return dt.isoformat()
+
+
+class Cliente:
+    def __init__(self, id=None, nome=None,
+                 data_nascimento=None):
+        self.id = id
+        self.nome = nome
+        self.data_nascimento = data_nascimento
+
+    def to_json(self):
+        raw = {
+            'id': self.id,
+            'nome': self.nome,
+            'data_nascimento': fmt_datetime(
+              self.data_nascimento
+            ),
+        }
+        return json.dumps(raw)
+</code></pre>
+
+<pre class="fragment fade-in" style="width: 49%; float: right"><code class="hlpy" data-trim contenteditable>
+import json
+
+from unittest.mock import patch
+from datetime import date, datetime
+
+import cliente
+
+
+def test_cliente_to_json():
+    c = cliente.Cliente(id=1, nome="Fulano", data_nascimento=date(2018, 1, 1))
+
+    with patch.object(cliente, 'datetime', wraps=cliente.datetime) as mock:
+        raw = json.loads(c.to_json())
+        assert mock.called
+        assert mock.call_args[0] == (2018, 1, 1)
+        assert len(mock.mock_calls) == 1
+
+    assert raw['id'] == 1
+    assert raw['nome'] == "Fulano"
+    assert raw['data_nascimento'] == "2018-01-01T00:00:00"
+
+    c.data_nascimento = datetime(2018, 1, 1, 12, 00, 10)
+    with patch.object(cliente, 'datetime', wraps=cliente.datetime) as mock:
+        raw = json.loads(c.to_json())
+        assert mock.called is False
+
+    assert raw['id'] == 1
+    assert raw['nome'] == "Fulano"
+    assert raw['data_nascimento'] == "2018-01-01T12:00:10"
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Stubs</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in">Substituições simples do comportamento de métodos ou funções;</li>
+            <li class="fragment fade-in">Respostas "enlatadas";</li>
+          </ul>
+<pre class="fragment fade-in" style="width: 49%; float: left"><code class="hlpy" data-trim contenteditable>
+# utils.py
+import os
+
+def apaga_arquivo(caminho):
+  os.remove(caminho)
+</code></pre>
+
+<pre class="fragment fade-in" style="width: 49%; float: right"><code class="hlpy" data-trim contenteditable>
+</code></pre>
         </section>
 
         <section>
