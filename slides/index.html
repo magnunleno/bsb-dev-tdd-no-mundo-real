@@ -138,23 +138,6 @@
             <li class="fragment fade-in">De acordo com <a href="https://martinfowler.com/articles/mocksArentStubs.html">Martin Fowler</a>...</li>
             <li class="fragment fade-in">São sub-tipos de <em>test doubles</em>, junto com Dummy e Fake Objects;</li>
             <li class="fragment fade-in">Nomenclatura varia de acordo com a linguagem e o framework de testes;</li>
-            <li class="fragment fade-in">Spies
-              <ul>
-              </ul>
-            </li>
-            <li class="fragment fade-in">Stub
-              <ul>
-                <li>"Substituição" de um método ou função simples a fim de evitar uma "comuniação externa";</li>
-                <li>Geralmente envolve a devolução de "respostas enlatadas";</li>
-              </ul>
-            </li>
-            <li class="fragment fade-in">Mocks
-              <ul>
-                <li>Forma mais complexa de </li>
-                <li>Stub de um "objeto complexo";</li>
-                <li>Possui funcionalidades de spies e de stubs</li>
-              </ul>
-            </li>
           </ul>
         </section>
 
@@ -168,86 +151,134 @@
 
         <section>
           <h2>Spies</h2>
-<pre class="fragment fade-in" style="width: 49%; float: left"><code class="hlpy" data-trim contenteditable>
-# cliente.py
-import json
-from datetime import date, datetime
+<pre class="fragment fade-in" style="width: 44%; float: left; min-height: 100%; margin-right: 5px;"><code class="hlpy" style="height: 420px;" data-trim contenteditable>
+# utils.py
+import datetime
 
 
 def fmt_datetime(dt):
-    if isinstance(dt, date):
-        dt = datetime(
-          dt.year, dt.month, dt.day
+    if type(dt) == date:
+        dt = datetime.datetime(
+          dt.year,
+          dt.month,
+          dt.day,
         )
     return dt.isoformat()
-
-
-class Cliente:
-    def __init__(self, id=None, nome=None,
-                 data_nascimento=None):
-        self.id = id
-        self.nome = nome
-        self.data_nascimento = data_nascimento
-
-    def to_json(self):
-        raw = {
-            'id': self.id,
-            'nome': self.nome,
-            'data_nascimento': fmt_datetime(
-              self.data_nascimento
-            ),
-        }
-        return json.dumps(raw)
 </code></pre>
-
-<pre class="fragment fade-in" style="width: 49%; float: right"><code class="hlpy" data-trim contenteditable>
-import json
-
+<pre class="fragment fade-in" style="width: 55%; float: left"><code class="hlpy" data-trim contenteditable>
+# test_utils.py
 from unittest.mock import patch
 from datetime import date, datetime
 
-import cliente
+import utils
 
 
-def test_cliente_to_json():
-    c = cliente.Cliente(id=1, nome="Fulano", data_nascimento=date(2018, 1, 1))
+def test_fmt_datetime():
+    with patch.object(utils, 'datetime', wraps=utils.datetime) as spie:
+        fmt = utils.fmt_datetime(
+          date(2018, 1, 1)
+        )
+        assert spie.called
+        assert spie.call_args[0] == (2018, 1, 1)
+        assert len(spie.mock_calls) == 1
+        assert fmt == "2018-01-01T00:00:00"
 
-    with patch.object(cliente, 'datetime', wraps=cliente.datetime) as mock:
-        raw = json.loads(c.to_json())
-        assert mock.called
-        assert mock.call_args[0] == (2018, 1, 1)
-        assert len(mock.mock_calls) == 1
+        spie.reset_mock()
 
-    assert raw['id'] == 1
-    assert raw['nome'] == "Fulano"
-    assert raw['data_nascimento'] == "2018-01-01T00:00:00"
-
-    c.data_nascimento = datetime(2018, 1, 1, 12, 00, 10)
-    with patch.object(cliente, 'datetime', wraps=cliente.datetime) as mock:
-        raw = json.loads(c.to_json())
-        assert mock.called is False
-
-    assert raw['id'] == 1
-    assert raw['nome'] == "Fulano"
-    assert raw['data_nascimento'] == "2018-01-01T12:00:10"
+        fmt = utils.fmt_datetime(
+          datetime(2018, 1, 1, 2, 3, 4)
+        )
+        assert not spie.called
+        assert fmt == "2018-01-01T02:03:04"
 </code></pre>
         </section>
 
         <section>
           <h2>Stubs</h2>
           <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in">Substituições simples do comportamento de métodos ou funções;</li>
-            <li class="fragment fade-in">Respostas "enlatadas";</li>
+            <li class="fragment fade-in">Substituição de um método ou função simples a fim de evitar uma "comunicação externa";</li>
+            <li class="fragment fade-in">Geralmente envolve a devolução de "respostas enlatadas";</li>
           </ul>
+        </section>
+
+        <section>
+          <h2>Stubs</h2>
 <pre class="fragment fade-in" style="width: 49%; float: left"><code class="hlpy" data-trim contenteditable>
 # utils.py
 import os
 
 def apaga_arquivo(caminho):
-  os.remove(caminho)
+    if os.path.exists(caminho):
+        os.remove(caminho)
+        return True
+    return False
 </code></pre>
 
 <pre class="fragment fade-in" style="width: 49%; float: right"><code class="hlpy" data-trim contenteditable>
+# test_utils.py
+import utils
+from unittest.mock import patch
+
+@patch('utils.os.remove', return_value=True)
+def test_apaga_arquivo(mock):
+    with patch('utils.os.path.exists', return_value=True):
+        success = utils.apaga_arquivo('/phony/file')
+        assert success
+
+    with patch('utils.os.path.exists', return_value=False):
+        success = utils.apaga_arquivo('/phony/file')
+        assert not success
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Mock</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in">Stub de um "objeto complexo";</li>
+            <li class="fragment fade-in">Possui funcionalidades de spies e de stubs</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Mock</h2>
+<pre class="fragment fade-in" style="width: 49%; float: left"><code class="hlpy" data-trim contenteditable>
+class Cliente:
+    def __init__(self, id=None, nome=None):
+        self.id = id
+        self.nome = nome
+
+    @classmethod
+    def use(kls, api=None):
+        if api:
+            kls.api = api
+
+    @classmethod
+    def por_id(kls, id):
+        data = kls.api.fetch(id)
+        if data is None:
+            return None
+        return kls(**data)
+</code></pre>
+<pre class="fragment fade-in" style="width: 49%; float: right"><code class="hlpy" data-trim contenteditable>
+from unittest.mock import MagicMock
+
+def test_cliente_api():
+    mock = MagicMock()
+    utils.Cliente.use(api=mock)
+
+    mock.fetch.return_value = {"id": 1, "nome": "Fulano"}
+    c = utils.Cliente.por_id(1)
+    assert mock.fetch.call_count == 1
+    assert mock.fetch.call_args[0] == (1,)
+    assert c.id == 1
+    assert c.nome == "Fulano"
+
+    mock.fetch.reset_mock()
+    mock.fetch.return_value = None
+    c = utils.Cliente.por_id(3)
+    assert c is None
+    assert mock.fetch.call_count == 1
+    assert mock.fetch.call_args[0] == (3,)
 </code></pre>
         </section>
 
