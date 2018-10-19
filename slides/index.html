@@ -28,6 +28,9 @@
     </script>
 
     <style>
+    .slides {
+      width: 1200px !important;
+    }
     </style>
 
     <!--[if lt IE 9]>
@@ -60,16 +63,52 @@
         </section>
 
         <section>
-          <h2>Motivação</h2>
+          <img src="./img/test-all-the-things.jpeg" />
+        </section>
+
+        <section>
+          <h2>Motivação (Testes)</h2>
           <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in">Fail first, fail fast!</li>
-            <li class="fragment fade-in">Planejar antes de desenvolver;</li>
-            <li class="fragment fade-in">Você não é pago pra escrever código;</li>
-            <li class="fragment fade-in">Reduzir as suposições superestimadas e otimizações prematuras;</li>
-            <li class="fragment fade-in">Reduz acoplamento e cria uma boa arquitetura para reuso (qualidade);</li>
-            <li class="fragment fade-in">Paz interior :)</li>
+            <li class="fragment fade-in-then-semi-out">Agilidade;</li>
+            <li class="fragment fade-in-then-semi-out">Reduz acoplamento e cria uma boa arquitetura para reuso (qualidade);</li>
+            <li class="fragment fade-in-then-semi-out">Especificação para trabalho distribuído;</li>
+            <li class="fragment fade-in-then-semi-out">Confiança e facilita mudanças - Paz de Espírito :)</li>
           </ul>
         </section>
+
+        <section>
+          <h2>Motivação (TDD)</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Design da sua API;</li>
+            <li class="fragment fade-in-then-semi-out">Fail first, fail fast!</li>
+            <li class="fragment fade-in-then-semi-out">Planejar antes de desenvolver;</li>
+            <li class="fragment fade-in-then-semi-out">Você não é pago pra escrever código;</li>
+            <li class="fragment fade-in-then-semi-out">Reduzir as suposições superestimadas e otimizações prematuras;</li>
+            <li class="fragment fade-in-then-semi-out">Melhora, mas não garante a qualidade de código;</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Prefiro Testar Depois</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Se torna uma tarefa massante;</li>
+            <li class="fragment fade-in-then-semi-out">Você precisa testar um código não testável;</li>
+            <li class="fragment fade-in-then-semi-out">Você só testa o "caminho feliz";</li>
+            <li class="fragment fade-in-then-semi-out">Perda de tempo com testes manuais;</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Boas Práticas (F.I.R.S.T.)</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in"><strong style="color: red;">F</strong>ast;</li>
+            <li class="fragment fade-in"><strong style="color: red;">I</strong>solated;</li>
+            <li class="fragment fade-in"><strong style="color: red;">R</strong>epeatable;</li>
+            <li class="fragment fade-in"><strong style="color: red;">S</strong>elf-Validating;</li>
+            <li class="fragment fade-in"><strong style="color: red;">T</strong>imely;</li>
+          </ul>
+        </section>
+
 
         <section>
           <h2>TDD - Test Driven Development</h2>
@@ -91,40 +130,44 @@
         <section>
           <h2>Etapas</h2>
           <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in">Planeje
+            <li class="fragment fade-in-then-semi-out">Planeje
               <ul>
                 <li>Novas funcionalidades...</li>
                 <li>Modificações de funcionalidades existentes...</li>
-                <li>API (não é a API REST)...</li>
               </ul>
             </li>
-            <li class="fragment fade-in">Escreva os Testes
+            <li class="fragment fade-in-then-semi-out">Escreva os Testes
               <ul>
                 <li>Unitários e Funcionais</li>
               </ul>
             </li>
-            <li class="fragment fade-in">Escreva o Código
+            <li class="fragment fade-in-then-semi-out">Escreva o Código
               <ul>
                 <li>Até que todos os testes passem!</li>
               </ul>
             </li>
-            <li class="fragment fade-in">REFATORE!</li>
+            <li class="fragment fade-in-then-semi-out">REFATORE!</li>
           </ul>
         </section>
 
         <section>
-          <img src="./img/test-all-the-things.jpeg" />
+          <h2>Leis do TDD</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Não escreva código até que você tenha escrito um código que falha;</li>
+            <li class="fragment fade-in-then-semi-out">Não escreva nenhum teste além do teste qe já está falhando;</li>
+            <li class="fragment fade-in-then-semi-out">Não escreva mais código além do necessário para fazer um teste passar;</li>
+          </ul>
         </section>
 
         <section>
           <h2>Testando, 1... 2... 3...</h2>
           <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in">Não faça testes manuais;</li>
-            <li class="fragment fade-in">Utilize dados fictícios;</li>
-            <li class="fragment fade-in">...ou extraídos de produção (descaracterizados);</li>
-            <li class="fragment fade-in">Valide toda sua lógica (cobertura);</li>
-            <li class="fragment fade-in">Se está difícil de testar, você não está fazendo certo!</li>
-            <li class="fragment fade-in">Utilize mocking, stubs e spies;</li>
+            <li class="fragment fade-in-then-semi-out">Não faça testes manuais;</li>
+            <li class="fragment fade-in-then-semi-out">Utilize dados fictícios;</li>
+            <li class="fragment fade-in-then-semi-out">...ou extraídos de produção (descaracterizados);</li>
+            <li class="fragment fade-in-then-semi-out">Valide toda sua lógica (cobertura);</li>
+            <li class="fragment fade-in-then-semi-out">Se está difícil de testar, você está fazendo certo errado!</li>
+            <li class="fragment fade-in-then-semi-out">Utilize spies, stubs e mocks;</li>
           </ul>
         </section>
 
@@ -203,7 +246,7 @@ def test_fmt_datetime():
 
         <section>
           <h2>Stubs</h2>
-<pre class="fragment fade-in" style="width: 49%; float: left"><code class="hlpy" data-trim contenteditable>
+<pre class="fragment fade-in" style="width: 49%; float: left; min-height: 100%;"><code style="height: 420px;" class="hlpy" data-trim contenteditable>
 # utils.py
 import os
 
@@ -214,7 +257,7 @@ def apaga_arquivo(caminho):
     return False
 </code></pre>
 
-<pre class="fragment fade-in" style="width: 49%; float: right"><code class="hlpy" data-trim contenteditable>
+<pre class="fragment fade-in" style="width: 49%; float: right; min-height: 100%;"><code style="height: 420px;" class="hlpy" data-trim contenteditable>
 # test_utils.py
 import utils
 from unittest.mock import patch
@@ -283,12 +326,89 @@ def test_cliente_api():
         </section>
 
         <section>
+          <h2>Outros Cuidados</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Mock de Infraestrutura
+              <ul>
+                <li>Cache;</li>
+                <li>Bancos de Dados (SQL e NoSQL);</li>
+                <li>Envio de email;</li>
+                <li>APIs externas;</li>
+                <li>Filas e Mensagerias;</li>
+              </ul>
+            </li>
+            <li class="fragment fade-in-then-semi-out">Massas de dados;</li>
+            <li class="fragment fade-in-then-semi-out">Geradores de dados fictícios;</li>
+            <li class="fragment fade-in-then-semi-out">Stup-ups/Clean-ups (ou fixtures);</li>
+            <li class="fragment fade-in-then-semi-out">Nomes de testes coerentes;</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Ambiente</h2>
+          <div style="text-align: left; font-size: .8em;">
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv install django pytest pytest-django pytest-cov</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv run django-admin startproject projeto</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv run pytest</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv run pytest --cov .</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv run pytest path/to/test_file.py</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv run pytest path/to/test_file.py::test_function_name</code></p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Ambiente</h2>
+<pre class="fragment fade-in" style=""><code class="hlpy" data-trim contenteditable>
+# setup.cfg
+[tool:pytest]
+DJANGO_SETTINGS_MODULE = projeto.settings
+python_files = test_*.py
+addopts = --reuse-db
+
+[coverage:run]
+branch = True
+
+[coverage:report]
+show_missing = True
+skip_covered = True
+sort = Cover
+precision = 2
+omit =
+    manage.py
+    projeto/wsgi.py
+    tests/*
+    */urls.py
+    */__init__.py
+    */migrations/*
+
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    def __str__
+
+ignore_errors = True
+</code></pre>
+        </section>
+
+        <section>
+          <h2>Estudo de Caso</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Eu como um cliente logado gostaria de fazer um pedido;
+              <ul>
+                <li><strong>Regra Implícita:</strong> o pedido tem que ter a data do próximo dia útil</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
           <h2>Para se aprofundar</h2>
           <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in">Testes de integração</li>
-            <li class="fragment fade-in">Ferramentas de testes E2E</li>
-            <li class="fragment fade-in">Testes com drivers de browsers headless</li>
-            <li class="fragment fade-in">BDD</li>
+            <li class="fragment fade-in">CI &amp; CD;</li>
+            <li class="fragment fade-in">Testes de integração;</li>
+            <li class="fragment fade-in">Ferramentas de testes E2E;</li>
+            <li class="fragment fade-in">Testes com drivers de browsers headless;</li>
+            <li class="fragment fade-in">BDD;</li>
           </ul>
         </section>
       </div>
