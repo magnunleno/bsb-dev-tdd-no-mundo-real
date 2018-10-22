@@ -7,11 +7,15 @@ name = "pypi"
 
 [packages]
 
-pytest = "*"
 django = "*"
-pytest-django = "*"
-pytest-cov = "*"
+djangorestframework = "*"
+django-rest-auth = "*"
+django-extensions = "*"
 
 
 [dev-packages]
 
+factory-boy = "*"
+pytest = "*"
+pytest-django = "*"
+pytest-cov = "*"

@@ -72,8 +72,17 @@
             <li class="fragment fade-in-then-semi-out">Agilidade;</li>
             <li class="fragment fade-in-then-semi-out">Reduz acoplamento e cria uma boa arquitetura para reuso (qualidade);</li>
             <li class="fragment fade-in-then-semi-out">Especificação para trabalho distribuído;</li>
-            <li class="fragment fade-in-then-semi-out">Confiança e facilita mudanças - Paz de Espírito :)</li>
+            <li class="fragment fade-in-then-semi-out">Aumenta confiança e facilita mudanças - Paz de Espírito :)</li>
           </ul>
+        </section>
+
+        <section>
+          <p>Não quero ter o que eu não tenho.<br/>
+          Eu não tenho medo de errar.<br/>
+          Não quero ser o que eu não sou.<br/>
+          Eu não sou maior que o mar.</p>
+          <p style="text-align: right; font-size: .9em;"><em>-- Surfando Karmas &amp; DNA<br/>
+          Engenheiros do Hawaii</em></p>
         </section>
 
         <section>
@@ -347,8 +356,10 @@ def test_cliente_api():
         <section>
           <h2>Ambiente</h2>
           <div style="text-align: left; font-size: .8em;">
-            <p class="fragment fade-in-then-semi-out"><code>$ pipenv install django pytest pytest-django pytest-cov</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv install django djangorestframework django-rest-auth</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv install pytest pytest-django pytest-cov factory_boy --dev</code></p>
             <p class="fragment fade-in-then-semi-out"><code>$ pipenv run django-admin startproject projeto</code></p>
+            <p class="fragment fade-in-then-semi-out"><code>$ pipenv run ./manage.py startapp appname path/to/app</code></p>
             <p class="fragment fade-in-then-semi-out"><code>$ pipenv run pytest</code></p>
             <p class="fragment fade-in-then-semi-out"><code>$ pipenv run pytest --cov .</code></p>
             <p class="fragment fade-in-then-semi-out"><code>$ pipenv run pytest path/to/test_file.py</code></p>
