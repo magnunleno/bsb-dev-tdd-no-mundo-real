@@ -19,3 +19,20 @@ def test_compras_exige_login(client, fake_users):
     with client.auth(user=user):
         response = client.get(url)
         assert response.status_code == 200
+
+
+def test_compras_vazias(client, fake_users, fake_produtos):
+    user = fake_users()
+    produtos = fake_produtos(3)
+    url = reverse('compras-list')
+
+    with client.auth(user=user):
+        response = client.get(url)
+        assert response.data == []
+        assert models.Compra.objects.filter(comprador=user).count() == 0
+
+        response = client.post(url, {
+            "produtos": [produtos[0].pk]
+        })
+        assert response.status_code == 201
+        assert models.Compra.objects.filter(comprador=user).count() == 1
