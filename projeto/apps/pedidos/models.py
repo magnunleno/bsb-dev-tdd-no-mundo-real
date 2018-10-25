@@ -24,5 +24,12 @@ class Compra(models.Model):
 
 
 class ItemCompra(models.Model):
-    compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    compra = models.ForeignKey(
+        Compra, on_delete=models.CASCADE,
+        related_name="itens_compra", related_query_name="item_compra"
+    )
+    produto = models.ForeignKey(
+        Produto, on_delete=models.CASCADE,
+        related_name="itens_compra", related_query_name="item_compra"
+    )
+    valor = models.DecimalField(max_digits=19, decimal_places=2)

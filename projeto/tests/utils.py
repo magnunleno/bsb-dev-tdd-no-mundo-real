@@ -3,6 +3,7 @@
 
 from decimal import Decimal
 from contextlib import contextmanager
+from datetime import datetime, date
 
 from rest_framework.test import APIClient
 
@@ -14,13 +15,10 @@ def load_produtos(path):
     with open(path, 'r') as fd:
         for line in fd.readlines():
             line = line.split(';')
-            print('line', line)
-            print('dado', line[0], line[1])
             produtos.append({
                 'nome': line[0],
                 'valor': Decimal(line[1]),
             })
-    print('produtos', produtos)
     return produtos
 
 
@@ -47,3 +45,13 @@ class CustomAPIClient(APIClient):
         yield self
 
         self.logout()
+
+
+def dt_fmt(dt):
+    if not dt:
+        return dt
+
+    if type(dt) == datetime:
+        return dt.isoformat().split('+')[0] + 'Z'
+    else:
+        return dt.strftime('%Y-%m-%d')
