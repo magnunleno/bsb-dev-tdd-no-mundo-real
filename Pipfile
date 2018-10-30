@@ -11,6 +11,7 @@ django = "*"
 djangorestframework = "*"
 django-rest-auth = "*"
 django-extensions = "*"
+drf-rw-serializers = "*"
 
 
 [dev-packages]
