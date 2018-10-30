@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>TDD: Django + PyTest - Meetup Brasília Dev Festival</title>
+    <title>TDD no Mundo Real - Meetup Brasília Dev Festival</title>
 
     <meta name="description" content="">
     <meta name="author" content="Magnun Leno <magnun [dot] leno [at] gmail [dot] com>">
@@ -31,6 +31,10 @@
     .slides {
       width: 1200px !important;
     }
+    .no-border-img {
+      background: unset !important;
+      border: unset !important;
+    }
     </style>
 
     <!--[if lt IE 9]>
@@ -44,8 +48,8 @@
       <div class="slides">
         <section>
           <img src="img/tdd-diagram.png" style="border: unset; background: unset; box-shadow: unset; height: 300px;" />
-          <h2>Django + REST + Pytest</h2>
-          <h3 style="text-transform: unset; font-size: .8em;">(FactoryBoy + Faker + Coverage + ...)</h3>
+          <h2>TDD no Mundo Real</h2>
+          <h3 style="text-transform: unset; font-size: .8em;">(Django + REST + PyTest + Coverage + FactoryBoy + Faker...)</h3>
         </section>
 
         <section>
@@ -62,12 +66,30 @@
           </ul>
         </section>
 
-        <section>
-          <img src="./img/test-all-the-things.jpeg" />
-        </section>
+        <section><img class="no-border-img" style="width: 80%" src="./img/aint-nobody.jpg" /></section>
+        <section><img class="no-border-img" style="width: 80%" src="./img/crash-test.gif" /></section>
+        <section><img class="no-border-img" style="width: 80%" src="./img/we-test-in-prod.jpg" /></section>
+        <section><img class="no-border-img" style="width: 70%" src="./img/voce-e-o-bichao-memo-hein-doido.jpg" /></section>
 
         <section>
-          <h2>Motivação (Testes)</h2>
+          <h2>Falando sério...</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Você testa de alguma forma, mesmo que vc não perceba.</li>
+            <li class="fragment fade-in-then-semi-out">Testes manuais, mesmo que "rápidos", não são repetíveis;</li>
+            <li class="fragment fade-in-then-semi-out">Complexidade ciclomática</li>
+            <li class="fragment fade-in-then-semi-out">Desenvolver vs. Manter</li>
+            <li class="fragment fade-in-then-semi-out">Testes em produção?</li>
+          </ul>
+        </section>
+
+        <section><img class="no-border-img" style="width: 80%" src="./img/i-test-in-prod.jpg" /></section>
+
+        <section><img class="no-border-img" style="width: 60%" src="./img/test-all-the-things.jpg" /></section>
+        <section><img class="no-border-img" style="width: 60%" src="./img/test-all-the-things-2.jpg" /></section>
+        <section><img class="no-border-img" style="width: 60%" src="./img/test-all-the-things-3.jpg" /></section>
+
+        <section>
+          <h2>Motivação - Testes Automatizados</h2>
           <ul style="text-align: left; width: 100%">
             <li class="fragment fade-in-then-semi-out">Agilidade;</li>
             <li class="fragment fade-in-then-semi-out">Reduz acoplamento e cria uma boa arquitetura para reuso (qualidade);</li>
@@ -77,21 +99,12 @@
         </section>
 
         <section>
-          <p>Não quero ter o que eu não tenho.<br/>
-          Eu não tenho medo de errar.<br/>
-          Não quero ser o que eu não sou.<br/>
-          Eu não sou maior que o mar.</p>
-          <p style="text-align: right; font-size: .9em;"><em>-- Surfando Karmas &amp; DNA<br/>
-          Engenheiros do Hawaii</em></p>
-        </section>
-
-        <section>
-          <h2>Motivação (TDD)</h2>
+          <h2>Motivação - TDD</h2>
           <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Você não é pago pra escrever código;</li>
+            <li class="fragment fade-in-then-semi-out">Planejar antes de desenvolver;</li>
             <li class="fragment fade-in-then-semi-out">Design da sua API;</li>
             <li class="fragment fade-in-then-semi-out">Fail first, fail fast!</li>
-            <li class="fragment fade-in-then-semi-out">Planejar antes de desenvolver;</li>
-            <li class="fragment fade-in-then-semi-out">Você não é pago pra escrever código;</li>
             <li class="fragment fade-in-then-semi-out">Reduzir as suposições superestimadas e otimizações prematuras;</li>
             <li class="fragment fade-in-then-semi-out">Melhora, mas não garante a qualidade de código;</li>
           </ul>
@@ -103,7 +116,6 @@
             <li class="fragment fade-in-then-semi-out">Se torna uma tarefa massante;</li>
             <li class="fragment fade-in-then-semi-out">Você precisa testar um código não testável;</li>
             <li class="fragment fade-in-then-semi-out">Você só testa o "caminho feliz";</li>
-            <li class="fragment fade-in-then-semi-out">Perda de tempo com testes manuais;</li>
           </ul>
         </section>
 
@@ -137,34 +149,20 @@
         </section>
 
         <section>
-          <h2>Etapas</h2>
-          <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in-then-semi-out">Planeje
-              <ul>
-                <li>Novas funcionalidades...</li>
-                <li>Modificações de funcionalidades existentes...</li>
-              </ul>
-            </li>
-            <li class="fragment fade-in-then-semi-out">Escreva os Testes
-              <ul>
-                <li>Unitários e Funcionais</li>
-              </ul>
-            </li>
-            <li class="fragment fade-in-then-semi-out">Escreva o Código
-              <ul>
-                <li>Até que todos os testes passem!</li>
-              </ul>
-            </li>
-            <li class="fragment fade-in-then-semi-out">REFATORE!</li>
-          </ul>
-        </section>
-
-        <section>
           <h2>Leis do TDD</h2>
           <ul style="text-align: left; width: 100%">
             <li class="fragment fade-in-then-semi-out">Não escreva código até que você tenha escrito um código que falha;</li>
             <li class="fragment fade-in-then-semi-out">Não escreva nenhum teste além do teste qe já está falhando;</li>
             <li class="fragment fade-in-then-semi-out">Não escreva mais código além do necessário para fazer um teste passar;</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Warning!</h2>
+          <ul style="text-align: left; width: 100%">
+            <li class="fragment fade-in-then-semi-out">Sua produtividade vai cair (inicialmente);</li>
+            <li class="fragment fade-in-then-semi-out">Não tente aplicar em tenologias que você não domina;</li>
+            <li class="fragment fade-in-then-semi-out">Não produz código perfeito;</li>
           </ul>
         </section>
 
@@ -175,13 +173,13 @@
             <li class="fragment fade-in-then-semi-out">Utilize dados fictícios;</li>
             <li class="fragment fade-in-then-semi-out">...ou extraídos de produção (descaracterizados);</li>
             <li class="fragment fade-in-then-semi-out">Valide toda sua lógica (cobertura);</li>
-            <li class="fragment fade-in-then-semi-out">Se está difícil de testar, você está fazendo certo errado!</li>
+            <li class="fragment fade-in-then-semi-out">Se está difícil de testar, você está fazendo errado!</li>
             <li class="fragment fade-in-then-semi-out">Utilize spies, stubs e mocks;</li>
           </ul>
         </section>
 
         <section>
-          <img src="./img/wait-what.jpg" />
+          <img class="no-border-img" src="./img/wait-what.jpg" />
         </section>
 
         <section>
@@ -197,7 +195,7 @@
           <h2>Spies</h2>
           <ul style="text-align: left; width: 100%">
             <li class="fragment fade-in">Um "envelope" de uma função ou método sem alterar seu comportamento;</li>
-            <li class="fragment fade-in">Registra seus argumentos, quantidade de vezes que foi invocada, retorno...</li>
+            <li class="fragment fade-in">Registra argumentos, quantidade de invocações, retorno...</li>
           </ul>
         </section>
 
@@ -295,14 +293,15 @@ def test_apaga_arquivo(mock):
           <h2>Mock</h2>
 <pre class="fragment fade-in" style="width: 49%; float: left"><code class="hlpy" data-trim contenteditable>
 class Cliente:
+    api = None
+
     def __init__(self, id=None, nome=None):
         self.id = id
         self.nome = nome
 
     @classmethod
     def use(kls, api=None):
-        if api:
-            kls.api = api
+        kls.api = api
 
     @classmethod
     def por_id(kls, id):
@@ -348,7 +347,7 @@ def test_cliente_api():
             </li>
             <li class="fragment fade-in-then-semi-out">Massas de dados;</li>
             <li class="fragment fade-in-then-semi-out">Geradores de dados fictícios;</li>
-            <li class="fragment fade-in-then-semi-out">Stup-ups/Clean-ups (ou fixtures);</li>
+            <li class="fragment fade-in-then-semi-out">Set-ups/Clean-ups (ou fixtures);</li>
             <li class="fragment fade-in-then-semi-out">Nomes de testes coerentes;</li>
           </ul>
         </section>
@@ -404,9 +403,11 @@ ignore_errors = True
         <section>
           <h2>Estudo de Caso</h2>
           <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in-then-semi-out">Eu como um cliente logado gostaria de fazer um pedido;
+            <li class="fragment fade-in-then-semi-out">Eu como um cliente logado gostaria de fazer um pedido;</li>
+            <li class="fragment fade-in-then-semi-out">Regra Implícita:
               <ul>
-                <li><strong>Regra Implícita:</strong> o pedido tem que ter a data do próximo dia útil</li>
+                <li>A data do pedido deve ser a data do próximo dia útil (apenas data);</li>
+                <li>A data e a hora original deve ser armazenada como "data efetiva";</li>
               </ul>
             </li>
           </ul>
@@ -421,6 +422,13 @@ ignore_errors = True
             <li class="fragment fade-in">Testes com drivers de browsers headless;</li>
             <li class="fragment fade-in">BDD;</li>
           </ul>
+        </section>
+
+        <section data-background="./img/thanks.jpg">
+          <div style="position: absolute; right: 0px; top: 25%">
+            <h2 style="color: #02b854">Obrigado!</h2>
+            <img class="no-border-img" src="./img/qr.png"/>
+          </div>
         </section>
       </div>
     </div>
