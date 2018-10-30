@@ -58,4 +58,6 @@ def test_dia_util_sab_dom_virada_mes():
     a data retornada está correta.
     Ex: 2018-06-30 => 2018-07-02
     '''
-    ...
+    sab = date(2018, 6, 30)
+    dia_util = utils.get_dia_util(sab)
+    assert date(2018, 7, 2) == dia_util
