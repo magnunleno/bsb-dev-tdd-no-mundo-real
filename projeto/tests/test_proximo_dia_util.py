@@ -43,4 +43,10 @@ def test_dia_util_sab_dom():
     '''
     Valida que, ao informar sab ou dom, a data retornada será segunda.
     '''
-    ...
+    sab = date(2018, 10, 20)
+    dia_util = utils.get_dia_util(sab)
+    assert date(2018, 10, 22) == dia_util
+
+    dom = date(2018, 10, 21)
+    dia_util = utils.get_dia_util(dom)
+    assert date(2018, 10, 22) == dia_util
