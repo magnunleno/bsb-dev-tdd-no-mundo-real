@@ -37,3 +37,10 @@ def test_dias_uteis():
     dom = date(2018, 10, 21)
     dia_util = utils.get_dia_util(dom)
     assert dom != dia_util
+
+
+def test_dia_util_sab_dom():
+    '''
+    Valida que, ao informar sab ou dom, a data retornada será segunda.
+    '''
+    ...
