@@ -50,3 +50,12 @@ def test_dia_util_sab_dom():
     dom = date(2018, 10, 21)
     dia_util = utils.get_dia_util(dom)
     assert date(2018, 10, 22) == dia_util
+
+
+def test_dia_util_sab_dom_virada_mes():
+    '''
+    Valida que, ao informar uma data em que há virada de mês no fim de semana,
+    a data retornada está correta.
+    Ex: 2018-06-30 => 2018-07-02
+    '''
+    ...
