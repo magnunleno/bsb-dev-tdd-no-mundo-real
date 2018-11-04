@@ -5,13 +5,19 @@ from datetime import timedelta
 from apps.core.models import Feriado
 
 
-def get_dia_util(dia):
+def eh_feriado(dia):
     queryset = Feriado.objects.filter(dia=dia)
     if queryset.exists():
-        return dia + timedelta(days=1)
+        return True
 
-    if dia.weekday() == 5:
-        return dia + timedelta(days=2)
-    if dia.weekday() == 6:
-        return dia + timedelta(days=1)
+    if dia.weekday() in (5, 6):
+        return True
+    return False
+
+
+def get_dia_util(dia):
+    while True:
+        if not eh_feriado(dia):
+            break
+        dia += timedelta(days=1)
     return dia

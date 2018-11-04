@@ -79,4 +79,8 @@ def test_dia_util_sex_feriado():
     Testa que a função pode lidar com feriados e fins de semana consecutivos.
     Ex: (sexta-feira) 2018-10-19
     '''
-    ...
+    sex_fer = date(2018, 10, 19)
+    models.Feriado.objects.create(
+        dia=sex_fer, descricao="Hoje é dia da maldade!"
+    )
+    assert utils.get_dia_util(sex_fer) == date(2018, 10, 22)
