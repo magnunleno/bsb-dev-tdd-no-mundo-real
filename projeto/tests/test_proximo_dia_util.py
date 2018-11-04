@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 from datetime import date
-from apps.core import utils
+from apps.core import utils, models
 
 
 def test_dias_uteis():
@@ -65,6 +65,10 @@ def test_dia_util_sab_dom_virada_mes():
 
 def test_dia_util_seg_feriado():
     '''
-    Valida a obetnção do próximo dia útil quando a data informada é um feriado.
+    Valida a obtenção do próximo dia útil quando a data informada é um feriado.
     '''
-    ...
+    seg_fer = date(2018, 10, 15)
+    models.Feriado.objects.create(
+        dia=seg_fer, descricao="Segunda devia ser feriado!"
+    )
+    assert utils.get_dia_util(seg_fer) == date(2018, 10, 16)
