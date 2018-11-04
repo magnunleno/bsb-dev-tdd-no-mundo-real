@@ -72,3 +72,11 @@ def test_dia_util_seg_feriado():
         dia=seg_fer, descricao="Segunda devia ser feriado!"
     )
     assert utils.get_dia_util(seg_fer) == date(2018, 10, 16)
+
+
+def test_dia_util_sex_feriado():
+    '''
+    Testa que a função pode lidar com feriados e fins de semana consecutivos.
+    Ex: (sexta-feira) 2018-10-19
+    '''
+    ...
