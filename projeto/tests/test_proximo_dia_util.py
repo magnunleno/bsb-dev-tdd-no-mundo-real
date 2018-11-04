@@ -61,3 +61,10 @@ def test_dia_util_sab_dom_virada_mes():
     sab = date(2018, 6, 30)
     dia_util = utils.get_dia_util(sab)
     assert date(2018, 7, 2) == dia_util
+
+
+def test_dia_util_seg_feriado():
+    '''
+    Valida a obetnção do próximo dia útil quando a data informada é um feriado.
+    '''
+    ...
