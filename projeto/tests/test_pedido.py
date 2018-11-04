@@ -12,4 +12,12 @@ def test_compras_exige_login(client, fake_users):
     Valida que a URL de realizar uma compra só pode ser acessada por usuários
     logados.
     '''
-    ...
+    url = reverse('compras-list')
+
+    response = client.get(url)
+    assert response.status_code == 403
+
+    user = fake_users()
+    with client.auth(user=user):
+        response = client.get(url)
+    assert response.status_code == 200

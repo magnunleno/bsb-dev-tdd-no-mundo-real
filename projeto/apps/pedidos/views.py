@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 
 class ComprasViewSet(viewsets.ModelViewSet):
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def list(self, request):
         return Response([])
