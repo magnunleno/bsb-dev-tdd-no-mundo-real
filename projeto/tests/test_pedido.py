@@ -93,7 +93,7 @@ def test_criar_compra(client, fake_users, fake_produtos):
     produtos = fake_produtos(3)
     pks = [i.pk for i in produtos]
     url = reverse('compras-list')
-    mock_data = datetime(2018, 1, 1, 15, 45).replace(tzinfo=utc)
+    mock_data = datetime(2018, 10, 13, 15, 45).replace(tzinfo=utc)
 
     with client.auth(user=user):
         with patch('apps.pedidos.serializers.timezone.now') as mock:
