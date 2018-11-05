@@ -113,3 +113,17 @@ def test_criar_compra(client, fake_users, fake_produtos):
         assert int(p1['produto_pk']) == produtos[0].pk
         assert p1['produto_nome'] == produtos[0].nome
         assert Decimal(p1['produto_valor']) == produtos[0].valor
+
+
+def test_compra_com_produto_inexistente(client, fake_users, fake_produtos):
+    '''
+    Verifica a validação de que todos as pks informadas são de produtos
+    existentes.
+    '''
+    user = fake_users()
+    pks = [1024, 1025]
+    url = reverse('compras-list')
+
+    with client.auth(user=user):
+        response = client.post(url, {"produtos": pks}, format='json')
+        ...
