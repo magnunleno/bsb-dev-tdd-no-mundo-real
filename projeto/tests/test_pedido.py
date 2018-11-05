@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 from decimal import Decimal
-from datetime import datetime
+from datetime import datetime, date
 
 from unittest.mock import patch
 from django.urls import reverse
@@ -93,7 +93,7 @@ def test_criar_compra(client, fake_users, fake_produtos):
     produtos = fake_produtos(3)
     pks = [i.pk for i in produtos]
     url = reverse('compras-list')
-    mock_data = datetime(2018, 1, 1, 15, 45).replace(tzinfo=utc)
+    mock_data = datetime(2018, 10, 13, 15, 45).replace(tzinfo=utc)
 
     with client.auth(user=user):
         with patch('apps.pedidos.serializers.timezone.now') as mock:
@@ -105,7 +105,7 @@ def test_criar_compra(client, fake_users, fake_produtos):
         compra = models.Compra.objects.first()
 
         assert response.data['data_efetiva'] == dt_fmt(mock_data)
-        assert response.data['data'] == dt_fmt(mock_data.date())
+        assert response.data['data'] == dt_fmt(date(2018, 10, 15))
         assert int(response.data['pk']) == compra.pk
         assert len(response.data['itens_compra']) == 3
 
