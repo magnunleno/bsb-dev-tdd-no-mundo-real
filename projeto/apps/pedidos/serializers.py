@@ -30,6 +30,13 @@ class CompraSerializer(serializers.ModelSerializer):
         validated_data['data'] = get_dia_util(timezone.now().date())
         validated_data['data_efetiva'] = timezone.now()
         compra = super().create(validated_data)
+
+        itens = []
+        for produto in self.produtos:
+            itens.append(models.ItemCompra(
+                compra=compra, produto=produto,
+            ))
+        models.ItemCompra.objects.bulk_create(itens)
         return compra
 
     class Meta:

@@ -103,4 +103,13 @@ def test_criar_compra(client, fake_users, fake_produtos):
         assert response.status_code == 201
         assert models.Compra.objects.filter(comprador=user).count() == 1
         compra = models.Compra.objects.first()
-        ...
+
+        assert response.data['data_efetiva'] == dt_fmt(mock_data)
+        assert response.data['data'] == dt_fmt(mock_data.date())
+        assert int(response.data['pk']) == compra.pk
+        assert len(response.data['itens_compra']) == 3
+
+        p1 = response.data['itens_compra'][0]
+        assert int(p1['produto_pk']) == produtos[0].pk
+        assert p1['produto_nome'] == produtos[0].nome
+        assert Decimal(p1['produto_valor']) == produtos[0].valor
