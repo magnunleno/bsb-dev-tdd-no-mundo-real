@@ -126,4 +126,11 @@ def test_compra_com_produto_inexistente(client, fake_users, fake_produtos):
 
     with client.auth(user=user):
         response = client.post(url, {"produtos": pks}, format='json')
-        ...
+        assert response.status_code == 400
+        assert response.data['produtos'][0] ==\
+            'Não foi possível encontrar um ou mais produtos'
+
+        response = client.get(url)
+        assert response.status_code == 200
+        assert len(response.data) == 0
+        assert models.Compra.objects.filter(comprador=user).count() == 0

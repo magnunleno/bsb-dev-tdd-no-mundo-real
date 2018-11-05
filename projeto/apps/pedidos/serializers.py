@@ -22,6 +22,10 @@ class CompraSerializer(serializers.ModelSerializer):
     def validate(self, data):
         produto_ids = self.initial_data.get('produtos', [])
         self.produtos = models.Produto.objects.filter(id__in=produto_ids)
+        if len(produto_ids) != self.produtos.count():
+            raise serializers.ValidationError({
+                'produtos': 'Não foi possível encontrar um ou mais produtos'
+            })
         return super().validate(data)
 
     @transaction.atomic
