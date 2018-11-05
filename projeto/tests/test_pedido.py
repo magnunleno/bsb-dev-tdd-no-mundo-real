@@ -35,4 +35,24 @@ def test_compras_vazias(client, fake_users, fake_produtos, fake_compras):
     url = reverse('compras-list')
 
     with client.auth(user=user):
-        ...
+        # Sem compras
+        assert models.Compra.objects.filter(comprador=user).count() == 0
+        response = client.get(url)
+        assert response.data == []
+
+        # Cria uma compra
+        compra = fake_compras(comprador=user, produtos=fake_produtos(5))
+        produto1 = compra.produtos.first()
+        assert models.Compra.objects.filter(comprador=user).count() == 1
+
+        # Valida listagem
+        response = client.get(url)
+        assert len(response.data) == 1
+        c = response.data[0]
+        assert int(c['pk']) == compra.pk
+        assert c['data'] == dt_fmt(compra.data)
+        assert c['data_efetiva'] == dt_fmt(compra.data_efetiva)
+        assert len(c['itens_compra']) == 5
+        assert int(c['itens_compra'][0]['produto_pk']) == produto1.pk
+        assert c['itens_compra'][0]['produto_nome'] == produto1.nome
+        assert Decimal(c['itens_compra'][0]['produto_valor']) == produto1.valor

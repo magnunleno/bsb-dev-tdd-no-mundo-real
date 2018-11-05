@@ -12,6 +12,8 @@ from . import models, serializers
 class ComprasViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
                      GenericViewSet):
     permission_classes = (permissions.IsAuthenticated,)
-    # serializer_class = serializers.CompraSerializer
-    # read_serializer_class = serializers.CompraReadOnlySerializer
-    ...
+    serializer_class = serializers.CompraSerializer
+    read_serializer_class = serializers.CompraReadOnlySerializer
+
+    def get_queryset(self):
+        return models.Compra.objects.all()
