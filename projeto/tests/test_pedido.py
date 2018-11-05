@@ -56,3 +56,12 @@ def test_compras_vazias(client, fake_users, fake_produtos, fake_compras):
         assert int(c['itens_compra'][0]['produto_pk']) == produto1.pk
         assert c['itens_compra'][0]['produto_nome'] == produto1.nome
         assert Decimal(c['itens_compra'][0]['produto_valor']) == produto1.valor
+
+
+def test_segmentacao_compras_usuarios(client, fake_users, fake_produtos,
+                                      fake_compras):
+    '''
+    Somente o usuário que fez a compra deve visualizá-la.
+    Ex: User_1 possui uma compra, porém User_2 não possui compras
+    '''
+    ...
