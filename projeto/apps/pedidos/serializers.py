@@ -51,8 +51,13 @@ class CompraSerializer(serializers.ModelSerializer):
 
 class CompraReadOnlySerializer(serializers.ModelSerializer):
     itens_compra = ItemCompraSerializer(many=True)
+    valor_total = serializers.SerializerMethodField()
+
+    def get_valor_total(self, obj):
+        return obj.produtos.aggregate(total=Sum('valor'))['total']
 
     class Meta:
         model = models.Compra
-        fields = ('pk', 'data', 'data_efetiva', 'itens_compra')
-        read_only_fields = ('pk', 'data', 'data_efetiva', 'itens_compra')
+        fields = ('pk', 'data', 'data_efetiva', 'itens_compra', 'valor_total')
+        read_only_fields = ('pk', 'data', 'data_efetiva', 'itens_compra',
+                            'valor_total')
