@@ -16,4 +16,4 @@ class ComprasViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
     read_serializer_class = serializers.CompraReadOnlySerializer
 
     def get_queryset(self):
-        return models.Compra.objects.all()
+        return models.Compra.objects.filter(comprador=self.request.user)

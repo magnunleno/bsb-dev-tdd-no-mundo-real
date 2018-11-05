@@ -64,4 +64,18 @@ def test_segmentacao_compras_usuarios(client, fake_users, fake_produtos,
     Somente o usuário que fez a compra deve visualizá-la.
     Ex: User_1 possui uma compra, porém User_2 não possui compras
     '''
-    ...
+    users = fake_users(2)
+    url = reverse('compras-list')
+    compra = fake_compras(comprador=users[0], produtos=fake_produtos(5))
+    assert models.Compra.objects.count() == 1
+
+    with client.auth(user=users[0]):
+        response = client.get(url)
+        assert response.status_code == 200
+        assert len(response.data) == 1
+        assert int(response.data[0]['pk']) == compra.pk
+
+    with client.auth(user=users[1]):
+        response = client.get(url)
+        assert response.status_code == 200
+        assert len(response.data) == 0
