@@ -8,6 +8,7 @@ import factory.fuzzy
 
 from faker import Faker
 from factory.django import DjangoModelFactory
+from apps.pedidos.models import Produto
 
 from . import utils
 
@@ -15,6 +16,7 @@ faker = Faker()
 User = get_user_model()
 
 PASSWORD = utils.DEFAULT_PASSWORD
+PRODUTOS = utils.load_produtos('tests/data/produtos.txt')
 
 
 class UserFactory(DjangoModelFactory):
@@ -38,3 +40,11 @@ class UserFactory(DjangoModelFactory):
 
     class Meta:
         model = User
+
+
+class ProdutosFactory(DjangoModelFactory):
+    nome = factory.Iterator([i['nome'] for i in PRODUTOS])
+    valor = factory.Iterator([i['valor'] for i in PRODUTOS])
+
+    class Meta:
+        model = Produto

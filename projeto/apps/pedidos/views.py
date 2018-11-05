@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-from rest_framework import viewsets, permissions
+from rest_framework import permissions
 from rest_framework.response import Response
+from drf_rw_serializers.viewsets import (CreateModelMixin, ListModelMixin,
+                                         RetrieveModelMixin, GenericViewSet)
+
+from . import models, serializers
 
 
-class ComprasViewSet(viewsets.ModelViewSet):
+class ComprasViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
+                     GenericViewSet):
     permission_classes = (permissions.IsAuthenticated,)
-
-    def list(self, request):
-        return Response([])
-
-    def create(self, request):
-        return Response([])
+    # serializer_class = serializers.CompraSerializer
+    # read_serializer_class = serializers.CompraReadOnlySerializer
+    ...
