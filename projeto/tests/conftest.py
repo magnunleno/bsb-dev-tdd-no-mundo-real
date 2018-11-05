@@ -48,7 +48,8 @@ def fake_compras(db):
             data=get_dia_util(date.today()),
             comprador=comprador,
         )
-        itens = [ItemCompra(produto=p, compra=compra) for p in produtos]
+        itens = [ItemCompra(produto=p, compra=compra, valor=p.valor)
+                 for p in produtos]
         ItemCompra.objects.bulk_create(itens)
         return compra
     return make_fake_compra

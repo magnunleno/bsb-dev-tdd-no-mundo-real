@@ -58,7 +58,7 @@ def test_compras_vazias(client, fake_users, fake_produtos, fake_compras):
         assert len(c['itens_compra']) == 5
         assert int(c['itens_compra'][0]['produto_pk']) == produto1.pk
         assert c['itens_compra'][0]['produto_nome'] == produto1.nome
-        assert Decimal(c['itens_compra'][0]['produto_valor']) == produto1.valor
+        assert Decimal(c['itens_compra'][0]['valor']) == produto1.valor
 
 
 def test_segmentacao_compras_usuarios(client, fake_users, fake_produtos,
@@ -112,7 +112,7 @@ def test_criar_compra(client, fake_users, fake_produtos):
         p1 = response.data['itens_compra'][0]
         assert int(p1['produto_pk']) == produtos[0].pk
         assert p1['produto_nome'] == produtos[0].nome
-        assert Decimal(p1['produto_valor']) == produtos[0].valor
+        assert Decimal(p1['valor']) == produtos[0].valor
 
 
 def test_compra_com_produto_inexistente(client, fake_users, fake_produtos):

@@ -32,3 +32,4 @@ class ItemCompra(models.Model):
         Produto, on_delete=models.CASCADE,
         related_name="itens_compra", related_query_name="item_compra"
     )
+    valor = models.DecimalField(max_digits=19, decimal_places=2, default=0)

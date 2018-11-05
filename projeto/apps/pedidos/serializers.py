@@ -8,14 +8,12 @@ from django.db import transaction
 
 class ItemCompraSerializer(serializers.ModelSerializer):
     produto_pk = serializers.CharField(source="produto.pk")
-    produto_valor = serializers.CharField(source="produto.valor")
     produto_nome = serializers.CharField(source="produto.nome")
 
     class Meta:
         model = models.ItemCompra
-        fields = ('pk', 'produto_pk', 'produto_valor', 'produto_nome')
-        read_only_fields = ('pk', 'produto_pk', 'produto_valor',
-                            'produto_nome')
+        fields = ('pk', 'produto_pk', 'produto_nome', 'valor')
+        read_only_fields = ('pk', 'produto_pk', 'produto_nome', 'valor')
 
 
 class CompraSerializer(serializers.ModelSerializer):
@@ -38,7 +36,7 @@ class CompraSerializer(serializers.ModelSerializer):
         itens = []
         for produto in self.produtos:
             itens.append(models.ItemCompra(
-                compra=compra, produto=produto,
+                compra=compra, produto=produto, valor=produto.valor,
             ))
         models.ItemCompra.objects.bulk_create(itens)
         return compra
@@ -54,7 +52,7 @@ class CompraReadOnlySerializer(serializers.ModelSerializer):
     valor_total = serializers.SerializerMethodField()
 
     def get_valor_total(self, obj):
-        return obj.produtos.aggregate(total=Sum('valor'))['total']
+        return obj.itens_compra.aggregate(total=Sum('valor'))['total']
 
     class Meta:
         model = models.Compra

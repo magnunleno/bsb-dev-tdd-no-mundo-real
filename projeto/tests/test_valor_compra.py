@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+from decimal import Decimal
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
@@ -35,4 +36,17 @@ def test_valor_compra_apos_alteracao_produto(client, fake_users, fake_produtos,
     url = reverse('compras-detail', args=[compra.pk])
 
     with client.auth(user=user):
-        ...
+        response = client.get(url)
+        assert response.status_code == 200
+        assert response.data['valor_total'] == valor_total
+
+        produto = compra.produtos.first()
+        valor_original = produto.valor
+        produto.valor += 5
+        produto.save()
+
+        response = client.get(url)
+        assert response.status_code == 200
+        assert response.data['valor_total'] == valor_total
+        assert Decimal(response.data['itens_compra'][0]['valor']) \
+            == valor_original
