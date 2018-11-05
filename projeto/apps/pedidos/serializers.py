@@ -19,6 +19,19 @@ class ItemCompraSerializer(serializers.ModelSerializer):
 
 
 class CompraSerializer(serializers.ModelSerializer):
+    def validate(self, data):
+        produto_ids = self.initial_data.get('produtos', [])
+        self.produtos = models.Produto.objects.filter(id__in=produto_ids)
+        return super().validate(data)
+
+    @transaction.atomic
+    def create(self, validated_data):
+        validated_data['comprador'] = self.context['request'].user
+        validated_data['data'] = get_dia_util(timezone.now().date())
+        validated_data['data_efetiva'] = timezone.now()
+        compra = super().create(validated_data)
+        return compra
+
     class Meta:
         model = models.Compra
         fields = ('pk', 'data', 'data_efetiva', 'produtos')

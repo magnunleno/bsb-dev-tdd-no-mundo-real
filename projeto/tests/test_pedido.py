@@ -2,9 +2,12 @@
 # encoding: utf-8
 
 from decimal import Decimal
+from datetime import datetime
 
+from unittest.mock import patch
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.utils.timezone import utc
 from apps.pedidos import models
 from tests.utils import dt_fmt
 
@@ -79,3 +82,25 @@ def test_segmentacao_compras_usuarios(client, fake_users, fake_produtos,
         response = client.get(url)
         assert response.status_code == 200
         assert len(response.data) == 0
+
+
+def test_criar_compra(client, fake_users, fake_produtos):
+    '''
+    Testa a criação de uma compra através da API, utilizando o patch de uma
+    data.
+    '''
+    user = fake_users()
+    produtos = fake_produtos(3)
+    pks = [i.pk for i in produtos]
+    url = reverse('compras-list')
+    mock_data = datetime(2018, 1, 1, 15, 45).replace(tzinfo=utc)
+
+    with client.auth(user=user):
+        with patch('apps.pedidos.serializers.timezone.now') as mock:
+            mock.return_value = mock_data
+            response = client.post(url, {"produtos": pks}, format='json')
+
+        assert response.status_code == 201
+        assert models.Compra.objects.filter(comprador=user).count() == 1
+        compra = models.Compra.objects.first()
+        ...
