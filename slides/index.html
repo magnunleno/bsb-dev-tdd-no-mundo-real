@@ -98,6 +98,8 @@
           </ul>
         </section>
 
+        <section><img class="no-border-img" style="width: 60%" src="./img/new-feature.jpg" /></section>
+
         <section>
           <h2>Motivação - TDD</h2>
           <ul style="text-align: left; width: 100%">
@@ -152,7 +154,7 @@
           <h2>Leis do TDD</h2>
           <ul style="text-align: left; width: 100%">
             <li class="fragment fade-in-then-semi-out">Não escreva código até que você tenha escrito um código que falha;</li>
-            <li class="fragment fade-in-then-semi-out">Não escreva nenhum teste além do teste qe já está falhando;</li>
+            <li class="fragment fade-in-then-semi-out">Não escreva nenhum teste além do teste que já está falhando;</li>
             <li class="fragment fade-in-then-semi-out">Não escreva mais código além do necessário para fazer um teste passar;</li>
           </ul>
         </section>
@@ -167,7 +169,7 @@
         </section>
 
         <section>
-          <h2>Testando, 1... 2... 3...</h2>
+          <h2>Dicas Para Testes</h2>
           <ul style="text-align: left; width: 100%">
             <li class="fragment fade-in-then-semi-out">Não faça testes manuais;</li>
             <li class="fragment fade-in-then-semi-out">Utilize dados fictícios;</li>
@@ -194,7 +196,7 @@
         <section>
           <h2>Spies</h2>
           <ul style="text-align: left; width: 100%">
-            <li class="fragment fade-in">Um "envelope" de uma função ou método sem alterar seu comportamento;</li>
+            <li class="fragment fade-in">Um "envelope" de uma função ou método que não altera seu comportamento;</li>
             <li class="fragment fade-in">Registra argumentos, quantidade de invocações, retorno...</li>
           </ul>
         </section>
@@ -269,7 +271,7 @@ def apaga_arquivo(caminho):
 import utils
 from unittest.mock import patch
 
-@patch('utils.os.remove', return_value=True)
+@patch('utils.os.remove', return_value=None)
 def test_apaga_arquivo(mock):
     with patch('utils.os.path.exists', return_value=True):
         success = utils.apaga_arquivo('/phony/file')
